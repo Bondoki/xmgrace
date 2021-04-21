@@ -209,10 +209,10 @@ void define_symbols_popup(void *data)
                                                  "Circle",          /* 1 */
                                                  "Square",          /* 2 */
                                                  "Diamond",         /* 3 */
-                                                 "Triangle up",     /* 4 */
-                                                 "Triangle left",   /* 5 */
-                                                 "Triangle down",   /* 6 */
-                                                 "Triangle right",  /* 7 */
+                                                 "Triangle",        /* 4 */
+                                                 "Pentagon",        /* 5 */
+                                                 "Hexagon",         /* 6 */
+                                                 "Octagon",         /* 7 */
                                                  "Plus",            /* 8 */
                                                  "X",               /* 9 */
                                                  "Star",            /* 10 */

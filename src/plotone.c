@@ -1843,7 +1843,7 @@ int drawxysym(VPoint vp, double size, int symtype,
     Pen sympen, Pen symfillpen, char s)
 {
     double symsize;
-    VPoint vps[4];
+    VPoint vps[12];
     char buf[2];
     
     symsize = size*0.01;
@@ -1902,55 +1902,273 @@ int drawxysym(VPoint vp, double size, int symtype,
         DrawPolyline (vps, 3, POLYLINE_CLOSED);
         break;
     case SYM_TRIANG2:
-        vps[0].x = vp.x - 2*M_SQRT1_3*symsize;
-        vps[0].y = vp.y;
-        vps[1].x = vp.x + M_SQRT1_3*symsize;
-        vps[1].y = vp.y - symsize;
-        vps[2].x = vps[1].x;
-        vps[2].y = vp.y + symsize;
+        // pentagon
+        for(int i = 0; i < 5; i++)
+        {
+            vps[i].x = vp.x+symsize*cos(3.14/2.0+i*2.0*3.14159/5.0);
+            vps[i].y = vp.y+symsize*sin(3.14/2.0+i*2.0*3.14159/5.0);
+        }
         
         setpen(symfillpen);
-        DrawPolygon (vps, 3);
+        DrawPolygon (vps, 5);
         setpen(sympen);
-        DrawPolyline (vps, 3, POLYLINE_CLOSED);
+        DrawPolyline (vps, 5, POLYLINE_CLOSED);
         break;
     case SYM_TRIANG3:
-        vps[0].x = vp.x - symsize;
-        vps[0].y = vp.y + M_SQRT1_3*symsize;
-        vps[1].x = vp.x;
-        vps[1].y = vp.y - 2*M_SQRT1_3*symsize;
-        vps[2].x = vp.x + symsize;
-        vps[2].y = vps[0].y;
+        // Hexagon
+        for(int i = 0; i < 6; i++)
+        {
+            vps[i].x = vp.x+symsize*cos(0/2.0+i*2.0*3.14159/6.0);
+            vps[i].y = vp.y+symsize*sin(0/2.0+i*2.0*3.14159/6.0);
+        }
         
         setpen(symfillpen);
-        DrawPolygon (vps, 3);
+        DrawPolygon (vps, 6);
         setpen(sympen);
-        DrawPolyline (vps, 3, POLYLINE_CLOSED);
+        DrawPolyline (vps, 6, POLYLINE_CLOSED);
         break;
     case SYM_TRIANG4:
-        vps[0].x = vp.x - M_SQRT1_3*symsize;
-        vps[0].y = vp.y + symsize;
-        vps[1].x = vps[0].x;
-        vps[1].y = vp.y - symsize;
-        vps[2].x = vp.x + 2*M_SQRT1_3*symsize;
-        vps[2].y = vp.y;
+        {
+          // Hexagon
+        for(int i = 0; i < 8; i++)
+        {
+            vps[i].x = vp.x+symsize*cos(3.14159/8.0+i*2.0*3.14159/8.0);
+            vps[i].y = vp.y+symsize*sin(3.14159/8.0+i*2.0*3.14159/8.0);
+        }
         
         setpen(symfillpen);
-        DrawPolygon (vps, 3);
+        DrawPolygon (vps, 8);
         setpen(sympen);
-        DrawPolyline (vps, 3, POLYLINE_CLOSED);
+        DrawPolyline (vps, 8, POLYLINE_CLOSED);
+        
+          // tri-fan right
+//         float plusheight = 0.175*symsize;
+//         int innerCirclePoints = 3;
+//         
+//         // some magic numbers to fit the design
+//         float multiplier= 2.0f;
+//         float innerRadius = multiplier*1.41421*plusheight;
+//         float innerOuterRadiusRatio = 2.0; // outter circle is x2 the inner
+//         float outerRadius = innerRadius * innerOuterRadiusRatio;
+//         
+//         float angle = (3.14159f / innerCirclePoints);
+//         float angleOffsetToCenterStar = 0;
+//         multiplier= 2.0f;
+//         //int totalPoints = 9; // 12 in a 4 plus
+//         
+//         //  3__ 2
+//         //   \ \
+//         //    \ \__0
+//         //     | __|
+//         //   4/ /7 8
+//         //   /_/  
+//         //  5  6
+//         // 
+//        
+//         vps[0].x = vp.x + cos(0 * angle + angleOffsetToCenterStar) * outerRadius + multiplier*plusheight*cos(0 * angle+0.5f*3.14159f);
+//         vps[0].y = vp.y + sin(0 * angle + angleOffsetToCenterStar) * outerRadius + multiplier*plusheight*sin(0 * angle+0.5f*3.14159f);
+//         
+//         vps[1].x = vp.x + cos(1 * angle + angleOffsetToCenterStar) * innerRadius;
+//         vps[1].y = vp.y + sin(1 * angle + angleOffsetToCenterStar) * innerRadius;
+//         
+//         vps[2].x = vp.x + cos(2 * angle + angleOffsetToCenterStar) * outerRadius - multiplier*plusheight*cos(2 * angle+0.5f*3.14159f);
+//         vps[2].y = vp.y + sin(2 * angle + angleOffsetToCenterStar) * outerRadius - multiplier*plusheight*sin(2 * angle+0.5f*3.14159f);
+//         
+//         vps[3].x = vp.x + cos(2 * angle + angleOffsetToCenterStar) * outerRadius + multiplier*plusheight*cos(2 * angle+0.5f*3.14159f);
+//         vps[3].y = vp.y + sin(2 * angle + angleOffsetToCenterStar) * outerRadius + multiplier*plusheight*sin(2 * angle+0.5f*3.14159f);
+//         
+//         vps[4].x = vp.x + cos(3 * angle + angleOffsetToCenterStar) * innerRadius;
+//         vps[4].y = vp.y + sin(3 * angle + angleOffsetToCenterStar) * innerRadius;
+//         
+//         vps[5].x = vp.x + cos(4 * angle + angleOffsetToCenterStar) * outerRadius - multiplier*plusheight*cos(4 * angle+0.5f*3.14159f);
+//         vps[5].y = vp.y + sin(4 * angle + angleOffsetToCenterStar) * outerRadius - multiplier*plusheight*sin(4 * angle+0.5f*3.14159f);
+//         
+//         vps[6].x = vp.x + cos(4 * angle + angleOffsetToCenterStar) * outerRadius + multiplier*plusheight*cos(4 * angle+0.5f*3.14159f);
+//         vps[6].y = vp.y + sin(4 * angle + angleOffsetToCenterStar) * outerRadius + multiplier*plusheight*sin(4 * angle+0.5f*3.14159f);
+//         
+//         vps[7].x = vp.x + cos(5 * angle + angleOffsetToCenterStar) * innerRadius;
+//         vps[7].y = vp.y + sin(5 * angle + angleOffsetToCenterStar) * innerRadius;
+//         
+//         vps[8].x = vp.x + cos(6 * angle + angleOffsetToCenterStar) * outerRadius - multiplier*plusheight*cos(6 * angle+0.5f*3.14159f);
+//         vps[8].y = vp.y + sin(6 * angle + angleOffsetToCenterStar) * outerRadius - multiplier*plusheight*sin(6 * angle+0.5f*3.14159f);
+//         
+//         
+//         setpen(symfillpen);
+//         DrawPolygon (vps, 9);
+//         setpen(sympen);
+//         DrawPolyline (vps, 9, POLYLINE_CLOSED);
+//         
+        }
         break;
     case SYM_PLUS:
+        {
+        float plusheight = 0.175*symsize;
+        int innerCirclePoints = 4;
+        
+        // some magic numbers to fit the design
+        float multiplier= 2.0f;
+        float innerRadius = multiplier*1.41421*plusheight;
+        float innerOuterRadiusRatio = 2.0; // outter circle is x2 the inner
+        float outerRadius = innerRadius * innerOuterRadiusRatio;
+        
+        float angle = (3.14159f / innerCirclePoints);
+        float angleOffsetToCenterStar = 0;
+        
+        //int totalPoints = 12; // 12 in a 4 plus
+        
+        /*    3_2
+        *    | |
+        * 5__| |1_0
+        * |__   __|
+        * 6 7| |10 11
+        *    |_|
+        *    8 9
+        */
+        
+        vps[0].x = vp.x + cos(0 * angle + angleOffsetToCenterStar) * outerRadius;
+        vps[0].y = vp.y + sin(0 * angle + angleOffsetToCenterStar) * outerRadius + multiplier*plusheight;
+        
+        vps[1].x = vp.x + cos(1 * angle + angleOffsetToCenterStar) * innerRadius;
+        vps[1].y = vp.y + sin(1 * angle + angleOffsetToCenterStar) * innerRadius;
+        
+        vps[2].x = vp.x + cos(2 * angle + angleOffsetToCenterStar) * outerRadius + multiplier*plusheight;
+        vps[2].y = vp.y + sin(2 * angle + angleOffsetToCenterStar) * outerRadius;
+        
+        vps[3].x = vp.x + cos(2 * angle + angleOffsetToCenterStar) * outerRadius - multiplier*plusheight;
+        vps[3].y = vp.y + sin(2 * angle + angleOffsetToCenterStar) * outerRadius;
+        
+        vps[4].x = vp.x + cos(3 * angle + angleOffsetToCenterStar) * innerRadius;
+        vps[4].y = vp.y + sin(3 * angle + angleOffsetToCenterStar) * innerRadius;
+        
+        vps[5].x = vp.x + cos(4 * angle + angleOffsetToCenterStar) * outerRadius;
+        vps[5].y = vp.y + sin(4 * angle + angleOffsetToCenterStar) * outerRadius + multiplier*plusheight;
+        
+        vps[6].x = vp.x + cos(4 * angle + angleOffsetToCenterStar) * outerRadius;
+        vps[6].y = vp.y + sin(4 * angle + angleOffsetToCenterStar) * outerRadius - multiplier*plusheight;
+        
+        vps[7].x = vp.x + cos(5 * angle + angleOffsetToCenterStar) * innerRadius;
+        vps[7].y = vp.y + sin(5 * angle + angleOffsetToCenterStar) * innerRadius;
+        
+        vps[8].x = vp.x + cos(6 * angle + angleOffsetToCenterStar) * outerRadius - multiplier*plusheight;
+        vps[8].y = vp.y + sin(6 * angle + angleOffsetToCenterStar) * outerRadius;
+        
+        vps[9].x = vp.x + cos(6 * angle + angleOffsetToCenterStar) * outerRadius + multiplier*plusheight;
+        vps[9].y = vp.y + sin(6 * angle + angleOffsetToCenterStar) * outerRadius;
+        
+        vps[10].x = vp.x + cos(7 * angle + angleOffsetToCenterStar) * innerRadius;
+        vps[10].y = vp.y + sin(7 * angle + angleOffsetToCenterStar) * innerRadius;
+        
+        vps[11].x = vp.x + cos(8 * angle + angleOffsetToCenterStar) * outerRadius;
+        vps[11].y = vp.y + sin(8 * angle + angleOffsetToCenterStar) * outerRadius - multiplier*plusheight;
+        
+        setpen(symfillpen);
+        DrawPolygon (vps, 12);
         setpen(sympen);
-        symplus(vp, symsize);
+        DrawPolyline (vps, 12, POLYLINE_CLOSED);
+        }
         break;
     case SYM_X:
-        setpen(sympen);
-        symx(vp, symsize);
+        { 
+          // more a rotated cross patty
+          // some magic numbers to fit the design
+          float plusheight = 0.475*symsize;//0.55
+          int innerCirclePoints = 4;
+          
+          float innerRadius = 0.7*1.41421*plusheight;//0.7
+          float innerOuterRadiusRatio = 2.0; // outter circle is x2 the inner
+          float outerRadius = innerRadius * innerOuterRadiusRatio;
+
+          float angle = (3.14159f / innerCirclePoints);
+          float angleOffsetToCenterStar = 0;//-55.0f*3.14159f/180.0f;
+
+          //int totalPoints = 12; // 12 in a 4 plus
+          
+          //     3_2               /\  /\
+          //     | |               \ \/ /
+          //  5__| |1_0             \  /
+          //  |__   __|     --->    /  \
+          //  6 7| |10 11          / /\ \ 
+          //     |_|               \/  \/
+          //     8 9
+
+          VPoint vps_old[12];
+          float multiplier= 1.0f;
+          vps_old[0].x = vp.x + cos(0 * angle + angleOffsetToCenterStar) * outerRadius;
+          vps_old[0].y = vp.y + sin(0 * angle + angleOffsetToCenterStar) * outerRadius + multiplier*plusheight;
+          
+          vps_old[1].x = vp.x + cos(1 * angle + angleOffsetToCenterStar) * innerRadius;
+          vps_old[1].y = vp.y + sin(1 * angle + angleOffsetToCenterStar) * innerRadius;
+          
+          vps_old[2].x = vp.x + cos(2 * angle + angleOffsetToCenterStar) * outerRadius + multiplier*plusheight;
+          vps_old[2].y = vp.y + sin(2 * angle + angleOffsetToCenterStar) * outerRadius;
+          
+          vps_old[3].x = vp.x + cos(2 * angle + angleOffsetToCenterStar) * outerRadius - multiplier*plusheight;
+          vps_old[3].y = vp.y + sin(2 * angle + angleOffsetToCenterStar) * outerRadius;
+          
+          vps_old[4].x = vp.x + cos(3 * angle + angleOffsetToCenterStar) * innerRadius;
+          vps_old[4].y = vp.y + sin(3 * angle + angleOffsetToCenterStar) * innerRadius;
+          
+          vps_old[5].x = vp.x + cos(4 * angle + angleOffsetToCenterStar) * outerRadius;
+          vps_old[5].y = vp.y + sin(4 * angle + angleOffsetToCenterStar) * outerRadius + multiplier*plusheight;
+          
+          vps_old[6].x = vp.x + cos(4 * angle + angleOffsetToCenterStar) * outerRadius;
+          vps_old[6].y = vp.y + sin(4 * angle + angleOffsetToCenterStar) * outerRadius - multiplier*plusheight;
+          
+          vps_old[7].x = vp.x + cos(5 * angle + angleOffsetToCenterStar) * innerRadius;
+          vps_old[7].y = vp.y + sin(5 * angle + angleOffsetToCenterStar) * innerRadius;
+          
+          vps_old[8].x = vp.x + cos(6 * angle + angleOffsetToCenterStar) * outerRadius - multiplier*plusheight;
+          vps_old[8].y = vp.y + sin(6 * angle + angleOffsetToCenterStar) * outerRadius;
+          
+          vps_old[9].x = vp.x + cos(6 * angle + angleOffsetToCenterStar) * outerRadius + multiplier*plusheight;
+          vps_old[9].y = vp.y + sin(6 * angle + angleOffsetToCenterStar) * outerRadius;
+          
+          vps_old[10].x = vp.x + cos(7 * angle + angleOffsetToCenterStar) * innerRadius;
+          vps_old[10].y = vp.y + sin(7 * angle + angleOffsetToCenterStar) * innerRadius;
+          
+          vps_old[11].x = vp.x + cos(8 * angle + angleOffsetToCenterStar) * outerRadius;
+          vps_old[11].y = vp.y + sin(8 * angle + angleOffsetToCenterStar) * outerRadius - multiplier*plusheight;
+          
+          // apply rotation matrix
+          float rotangle = 45.0f*3.14159f/180.0f;
+          for(int i = 0; i < 12; i++)
+          {
+            vps[i].x = (vps_old[i].x-vp.x)*cos(rotangle)-(vps_old[i].y-vp.y)*sin(rotangle) + vp.x;
+            vps[i].y = (vps_old[i].x-vp.x)*sin(rotangle)+(vps_old[i].y-vp.y)*cos(rotangle) + vp.y;
+          }
+          
+          setpen(symfillpen);
+          DrawPolygon (vps, 12);
+          setpen(sympen);
+          DrawPolyline (vps, 12, POLYLINE_CLOSED);
+        }
         break;
     case SYM_SPLAT:
-        setpen(sympen);
-        symsplat(vp, symsize);
+        { 
+          int innerCirclePoints = 5;
+          
+          // some magic numbers to fit the design
+          float innerRadius = 3.0*symsize / ((float)innerCirclePoints);
+          float innerOuterRadiusRatio = 2.0; // outter circle is x2 the inner
+          float outerRadius = innerRadius * innerOuterRadiusRatio;
+          
+          float angle = (3.14159f / innerCirclePoints);
+          float angleOffsetToCenterStar = -55.0f*3.14159f/180.0f; // to align the top
+
+          int totalPoints = innerCirclePoints * 2; // 10 in a 5-points star 
+   
+          for (int i = 0; i < totalPoints; i++) {
+            int isEvenIndex = (i % 2);
+            float r = (isEvenIndex == 0) ? outerRadius : innerRadius;
+            vps[i].x = vp.x + cos(i * angle + angleOffsetToCenterStar ) * r;
+            vps[i].y = vp.y + sin(i * angle + angleOffsetToCenterStar) * r;
+          }
+
+          setpen(symfillpen);
+          DrawPolygon (vps, 10);
+          setpen(sympen);
+          DrawPolyline (vps, 10, POLYLINE_CLOSED);
+        }
         break;
     case SYM_CHAR:
         setcolor(sympen.color);
