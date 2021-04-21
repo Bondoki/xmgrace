@@ -51,8 +51,7 @@ Introducing slithly modified Default.agr with colors similar to [seaborn](https:
 ````
 
 ## Screenshot
-![XmGrace_Screenshot](https://user-images.githubusercontent.com/16195016/115552842-07de8e80-a2ad-11eb-8e5a-a3fbd8dfd998.png =400x)
-
+<img src="https://user-images.githubusercontent.com/16195016/115552842-07de8e80-a2ad-11eb-8e5a-a3fbd8dfd998.png" width="400" />
 
 ## Useful codies
 ````sh
