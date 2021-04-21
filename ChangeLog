@@ -1,3 +1,23 @@
+2021-04-21 14:13  bondoki
+
+    * templates/Default.agr:
+      change Default.agr for more pleasing appearance by
+      changing line thickness and colors 
+
+2021-04-21 13:36  bondoki
+
+    * src/plotone.c, src/setappwin.c:
+      adding plotting routine to replace symbols by polygons
+      rename Triangle up -> Triangle, Triangle left -> Pentagon,
+      Triangle down -> Hexagon, Triangle right -> Octagon and
+      replace drawing for plus, cross, and star (addtional see 
+      line 1945-1999 in platone.c for triangle fan as in matplotlib)
+  
+2021-04-21 13:34  bondoki
+
+    * src/main.c:
+      default behavior: ps file export at start-up
+
 2015-02-15 00:58  fnevgeny
 
 	* COPYRIGHT, doc/UsersGuide.sgml, src/helpwin.c, src/main.c:
