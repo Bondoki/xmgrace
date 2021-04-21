@@ -1,0 +1,9 @@
+*.o
+*.a
+Make.conf
+config.h
+config.log
+config.status
+src/buildinfo
+src/buildinfo.h
+src/xmgrace
