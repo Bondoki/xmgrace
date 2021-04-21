@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
     } else {
         set_ptofile(FALSE);
     }
-    
+    set_ptofile(TRUE); // default print to file on start-up
     /*
      * editor
      */
